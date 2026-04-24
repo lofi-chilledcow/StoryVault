@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    platform: linux/amd64
+    ports:
+      - "8001:8001"
+    volumes:
+      - storyvault_data:/app/data
+    environment:
+      - DATABASE_PATH=/app/data/storyvault.db
+      - FRONTEND_URL=http://${VM_IP}:8081
+      - PORT=8001
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        VM_IP: ${VM_IP}
+    platform: linux/amd64
+    ports:
+      - "8081:8081"
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+volumes:
+  storyvault_data:
