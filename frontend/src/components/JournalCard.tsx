@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom'
 import type { Journal } from '../types'
 
 const categoryColors: Record<string, string> = {
@@ -18,8 +19,13 @@ interface Props {
 }
 
 export default function JournalCard({ journal, onDelete }: Props) {
+  const navigate = useNavigate()
+
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-5 shadow-sm flex flex-col gap-3">
+    <div
+      onClick={() => navigate(`/journals/${journal.id}`)}
+      className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-5 shadow-sm flex flex-col gap-3 cursor-pointer hover:border-indigo-400 dark:hover:border-indigo-500 hover:shadow-md transition-all"
+    >
       <div className="flex items-start justify-between gap-2">
         <h3 className="font-semibold text-gray-900 dark:text-white text-base leading-snug">
           {journal.title}
@@ -60,7 +66,7 @@ export default function JournalCard({ journal, onDelete }: Props) {
 
         {onDelete && (
           <button
-            onClick={() => onDelete(journal.id)}
+            onClick={e => { e.stopPropagation(); onDelete(journal.id) }}
             className="text-xs text-red-500 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300 transition-colors"
           >
             Delete

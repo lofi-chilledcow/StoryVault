@@ -3,6 +3,7 @@ import Home from './pages/Home'
 import Journals from './pages/Journals'
 import Stories from './pages/Stories'
 import StoryDetail from './pages/StoryDetail'
+import JournalDetail from './pages/JournalDetail'
 
 function Nav() {
   const linkClass = ({ isActive }: { isActive: boolean }) =>
@@ -38,6 +39,7 @@ export default function App() {
             <Route path="/"           element={<Home />} />
             <Route path="/journals"   element={<Journals />} />
             <Route path="/stories"    element={<Stories />} />
+            <Route path="/journals/:id" element={<JournalDetail />} />
             <Route path="/stories/:id" element={<StoryDetail />} />
           </Routes>
         </main>
