@@ -1,10 +1,13 @@
+from typing import Literal
 from pydantic import BaseModel
+
+Category = Literal["tech", "work", "life", "fun"]
 
 
 class JournalCreate(BaseModel):
     title: str
     content: str
-    category: str
+    category: Category
     vocab_words: list[str] = []
     score: int | None = None
     created_at: str | None = None
@@ -17,7 +20,7 @@ class Journal(JournalCreate):
 class StoryCreate(BaseModel):
     title: str
     content: str
-    category: str
+    category: Category
     themes: list[str] = []
     created_at: str | None = None
 
