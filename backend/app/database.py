@@ -2,7 +2,7 @@ import sqlite3
 import os
 import pathlib
 
-DATABASE_PATH = os.getenv("DATABASE_URL", "./data/storyvault.db")
+DATABASE_PATH = os.getenv("DATABASE_PATH", "./data/storyvault.db")
 
 pathlib.Path(DATABASE_PATH).parent.mkdir(parents=True, exist_ok=True)
 
