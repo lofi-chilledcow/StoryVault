@@ -1,73 +1,70 @@
-# React + TypeScript + Vite
+# StoryVault — Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+React + Vite + TypeScript dashboard for reading journals and stories.
 
-Currently, two official plugins are available:
+## Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **React 19** + **TypeScript**
+- **Vite** — build tool and dev server
+- **Tailwind CSS v4** — styling
+- **React Router v7** — client-side routing
+- **Axios** — API client
+- **Vitest** + **React Testing Library** — component tests
 
-## React Compiler
+## Project structure
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```
+frontend/src/
+├── api/
+│   └── client.ts        Axios instance + API helper functions
+├── components/
+│   ├── StatsBar.tsx      Writing stats (journals, stories, streak, words)
+│   ├── JournalCard.tsx   Journal card with category badge + vocab pills
+│   └── StoryCard.tsx     Story card, clickable → detail page
+├── pages/
+│   ├── Home.tsx          Dashboard: stats + latest 3 journals & stories
+│   ├── Journals.tsx      Full journal list with category filter
+│   ├── JournalDetail.tsx Single journal view
+│   ├── Stories.tsx       Full story list with category filter
+│   └── StoryDetail.tsx   Single story view
+├── types/
+│   └── index.ts          Shared TypeScript interfaces
+└── tests/
+    ├── setup.ts
+    ├── StatsBar.test.tsx
+    ├── JournalCard.test.tsx
+    └── StoryCard.test.tsx
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Setup
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
+cp .env .env.local   # or edit .env directly
+npm run dev          # http://localhost:5173
 ```
+
+## Environment variables
+
+```
+VITE_API_URL=http://localhost:8001
+```
+
+## Available scripts
+
+```bash
+npm run dev      # Dev server with HMR
+npm run build    # Production build → dist/
+npm run preview  # Preview production build
+npm test         # Run Vitest component tests
+```
+
+## Routes
+
+| Path             | Page          |
+|------------------|---------------|
+| `/`              | Home dashboard |
+| `/journals`      | Journal list   |
+| `/journals/:id`  | Journal detail |
+| `/stories`       | Story list     |
+| `/stories/:id`   | Story detail   |
