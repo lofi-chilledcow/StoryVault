@@ -269,6 +269,40 @@ def get_stats() -> str:
 
 
 # ---------------------------------------------------------------------------
+# Tool 10: delete_journal
+# ---------------------------------------------------------------------------
+
+@mcp.tool()
+def delete_journal(id: str) -> str:
+    """Delete a journal entry by id"""
+    try:
+        resp = httpx.delete(f"{API_URL}/api/journals/{id}", timeout=10)
+        resp.raise_for_status()
+        return f"✅ Journal {id} deleted."
+    except httpx.HTTPStatusError as e:
+        return f"❌ Failed to delete journal: {e.response.status_code} — {e.response.text}"
+    except Exception as e:
+        return f"❌ Error: {e}"
+
+
+# ---------------------------------------------------------------------------
+# Tool 11: delete_story
+# ---------------------------------------------------------------------------
+
+@mcp.tool()
+def delete_story(id: str) -> str:
+    """Delete a story by id"""
+    try:
+        resp = httpx.delete(f"{API_URL}/api/stories/{id}", timeout=10)
+        resp.raise_for_status()
+        return f"✅ Story {id} deleted."
+    except httpx.HTTPStatusError as e:
+        return f"❌ Failed to delete story: {e.response.status_code} — {e.response.text}"
+    except Exception as e:
+        return f"❌ Error: {e}"
+
+
+# ---------------------------------------------------------------------------
 # Entry point
 # ---------------------------------------------------------------------------
 
